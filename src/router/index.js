@@ -1,18 +1,19 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/home/Home.vue'
-import Login from '../views/login/Login.vue'
-import Register from '../views/login/Register.vue'
-
 const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: () => import(/* webpackChunkName: "home" */ '../views/home/Home')
+  },
+  {
+    path: '/shop/:id',
+    name: 'Shop',
+    component: () => import(/* webpackChunkName: "Shop" */ '../views/shop/Shop')
   },
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: () => import(/* webpackChunkName: "Login" */ '../views/login/Login'),
     // 在访问页面之前执行
     beforeEnter (to, from, next) {
       const { isLogin } = localStorage
@@ -22,7 +23,7 @@ const routes = [
   {
     path: '/register',
     name: 'Register',
-    component: Register,
+    component: () => import(/* webpackChunkName: "Register" */ '../views/login/Register'),
     beforeEnter (to, from, next) {
       const { isLogin } = localStorage
       isLogin ? next({ name: 'Home' }) : next()
@@ -37,7 +38,6 @@ const router = createRouter({
 // 单页应用实现前端拦截
 router.beforeEach((to, from, next) => {
   const isLogin = localStorage.isLogin
-  debugger
   if (isLogin || to.name === 'Login' || to.name === 'Register') {
     next()
   } else {

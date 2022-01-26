@@ -5,10 +5,10 @@
             <input type="text" v-model="username"  class="wrapper__input__content" placeholder="请输入用户名"/>
         </div>
         <div class="wrapper__input">
-            <input type="password" v-model="password" class="wrapper__input__content" placeholder="请输入密码"/>
+            <input type="password" v-model="password" class="wrapper__input__content" placeholder="请输入密码"  autocomplete="new-password"/>
         </div>
         <div class="wrapper__login-button" @click="handleLogin()">登录</div>
-        <div class="wrapper__login-link" @click="handleRegisterClick()">立即注册</div>
+        <div class="wrapper__login-link"  @click="handleRegisterClick()">立即注册</div>
         <toast v-if="show" :message ='toastMessage'/>
     </div>
 </template>
@@ -47,7 +47,6 @@ const useLoginEffect = (showToast) => {
 const useRegisterEffect = () => {
   const router = useRouter()
   const handleRegisterClick = () => {
-    debugger
     router.push({ name: 'Register' })
   }
   return { handleRegisterClick }
